@@ -10,6 +10,7 @@ ul{ list-style:none;}
   height:585px;
   margin:40px auto 0 auto;
   border:1px solid #ddd;
+  overflow: hidden;
 }
 
 .plate{
