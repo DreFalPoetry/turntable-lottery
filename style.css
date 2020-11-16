@@ -1,0 +1,37 @@
+/* reset */
+*{ padding:0; margin:0}
+body{ height: 100%; width: 100%; font-size:12px; color:#333;}
+ul{ list-style:none;}
+
+#boxWrapper{
+  position: relative;
+  margin: 50px;
+}
+
+/* style */
+#box{
+  width: 448px;
+  height: 448px;
+  background: url('./imgs/turntable.png') no-repeat left top;
+  transform-origin: 224px 224px;
+  transform: rotate(0deg);
+  /* animation: animations 2s linear infinite forwards ; */
+}
+
+#pointer {
+  width: 174px;
+  height: 228px;
+  position: absolute;
+  background: url('./imgs/pointer.png') no-repeat left top;
+  left: 131px;
+  top: 110px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+@keyframes animations{
+  0%{transform: rotate(0deg);}
+  100%{
+    transform: rotate(360deg);
+  }
+}

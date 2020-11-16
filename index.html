@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽奖 demo</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="boxWrapper">
+    <div id="box"></div>
+    <div id="pointer"></div>
+  </div>
+  <script>
+    window.onload = function(){
+      //获取转盘
+      const runTable = document.getElementById('box') 
+      //获取指针
+      const pointer = document.getElementById('pointer')
+      //定时器
+      let timer = null
+      //定时器时间间隔
+      let runTime = 2
+      //角度
+      let deg = null
+      //初始角度
+      let inital_deg = 0 
+      runTable.style.transform = "rotate(" + inital_deg  +"deg)"
+      //角度变化增量
+      let increment = 5
+      //转的圈数
+      let runCount = 6
+      //多余角度
+      let remain_deg = null;
+       //停止时的角度
+      let stop_deg= null; 
+      //区间奖项 
+      const prizeArr = [
+        [1,51,"1等奖"], //未中奖
+        [52,102,"2等奖"],//6等奖
+        [103,153,"3等奖"],//5等奖
+        [154,203,"4等奖"],//4等奖
+        [204,251,"5等奖"],//3等奖
+        [252,307,"6等奖"],//2等奖
+        [307,360,"未中奖"]//1等奖
+      ]; 
+
+      //可用次数
+      let vaildChance = 3
+
+      //奖项判定函数
+      function getPrizeInfo(deg){
+        console.log(deg)
+        var res="未中奖";
+        for(var i=0;i<prizeArr.length;i++){
+          if(deg>=prizeArr[i][0] && deg<prizeArr[i][1]){
+            res=prizeArr[i][2];
+          };
+        };
+        return res;
+      };
+
+      //是否在转动中
+      let isRunning = false
+
+      //设置中奖概率
+      let probabilityArr = [[938,"未中奖"],[18,"6等奖"],[14,"5等奖"],[12,"4等奖"],[8,"3等奖"],[6,"2等奖"],[4,"1等奖"]];
+      //已经转的圈数
+      let ranCount = 0;
+      //通过奖项设置额外角度的表现
+      function getRemainDeg(real){
+        var mindeg,maxdeg;
+        for(var i=0;i<prizeArr.length;i++){
+          if(real==prizeArr[i][2]){
+            mindeg=prizeArr[i][0];
+            maxdeg=prizeArr[i][1];
+          };
+        };
+        return mindeg+Math.floor(Math.random()*(maxdeg-mindeg+1));
+      };
+
+      //指针点击事件
+      pointer.onclick = function(){
+        if(!isRunning){
+          if(vaildChance == 0){
+            alert("次数用完了")
+          }else{
+            vaildChance -= 1
+            deg = inital_deg;
+            increment = 5
+            ranCount = 0
+            var allarr=[];//长度1000，存放0-6 表示奖项
+            for(let i=0;i<probabilityArr.length;i++){
+              for(let j=0;j<probabilityArr[i][0];j++){
+                allarr.push(probabilityArr[i][1]);
+              };
+            };
+            let real=allarr[Math.floor(Math.random()*1000)];
+            remain_deg = getRemainDeg(real);
+            stop_deg= runCount*360 + remain_deg;
+            timer = setInterval(turnTableRotate,runTime)
+          }
+        }
+      }
+  
+      // 转盘旋转
+      function turnTableRotate(){
+        isRunning = true
+        deg += increment
+        if(deg > stop_deg){
+          clearInterval(timer)
+          setTimeout(function(){
+            isRunning = false
+            alert(getPrizeInfo(remain_deg))
+          },500)
+        }else{
+          if(deg % 360 == 0){
+            ranCount += 1;
+            if(ranCount == runCount - 3){
+              increment = 2
+            }
+            if(ranCount == runCount -1){
+              increment = 1
+            } 
+          }
+          runTable.style.transform = "rotate(" + deg  +"deg)"
+        }
+      }
+    }
+  </script>
+</body>
+</html>
