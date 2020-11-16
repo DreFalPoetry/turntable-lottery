@@ -1,0 +1,30 @@
+/* reset */
+*{ padding:0; margin:0}
+body{ height: 100%; width: 100%; font-size:12px; color:#333;}
+ul{ list-style:none;}
+
+
+.lottery-draw-wrapper{
+  position:relative;
+  width:585px;
+  height:585px;
+  margin:40px auto 0 auto;
+  border:1px solid #ddd;
+}
+
+.plate{
+  position:relative;
+  float:left;
+  width:585px;
+  height:585px;
+  background:url('../imgs/plate.png') no-repeat left top;
+}
+
+.pointer{
+  position:absolute;
+  left:185px;
+  top:185px;
+  width:214px;
+  height:214px;
+  background:url('../imgs/rotate-static.png') no-repeat left top;
+}

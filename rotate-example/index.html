@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rotate抽奖</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/jquery-1.8.3.min.js"></script>
+  <script src="./js/jquery.rotate.min.js"></script>
+</head>
+<body>
+  <div class="lottery-draw-wrapper">
+    <div class="plate" id="rotateEle"></div>
+    <div class="pointer" id="pointerBtn"></div>
+  </div>
+  <script>
+    $(function(){
+      let pointerBtn = $('#pointerBtn');
+      let rotateEle = $('#rotateEle')
+      let isProcessing = false
+      let chanceCount = 3
+      pointerBtn.click(function(){
+        if(isProcessing){
+          return;
+        }
+        if(chanceCount == 0 ){
+          alert('has no chance')
+          return
+        }
+        const data = [0, 1, 2, 3, 4, 5, 6, 7];
+        let selectedItem = data[Math.floor(Math.random()*data.length)];
+        switch(selectedItem){
+          case 1: 
+            rotateFunc(1,340,'30移动充值卡');
+            break;
+          case 2: 
+            rotateFunc(2, 300,'全名奇迹抱枕');
+            break;
+          case 3: 
+            rotateFunc(3, 255,'礼包码');
+            break;
+          case 4: 
+            rotateFunc(4,205,'不要灰心');
+            break;
+          case 5: 
+            rotateFunc(5,155,'全名奇迹鼠标垫');
+            break;
+          case 6: 
+            rotateFunc(6,105,'再来一次');
+            break;
+          case 7: 
+            rotateFunc(7,60,'施华洛世奇水晶项链');
+            break;
+          default:
+            rotateFunc(0,20,'谢谢参与');
+        }
+      })
+
+      
+      let rotateFunc = function(awards,angle,text){  //awards:奖项，angle:奖项对应的角度
+        isProcessing = true
+        chanceCount -= 1
+        // $plateBtn.stopRotate();
+        rotateEle.rotate({
+          angle: 0,
+          duration: 5000,
+          animateTo: angle + 1440,  //angle是图片上各奖项对应的角度，1440是让指针固定旋转4圈
+          callback: function(){
+            console.log(text)
+            isProcessing = false
+            // $resultTxt.html(text);
+            // $result.show();
+          }
+        });
+      };
+    })
+  </script>
+</body>
+</html>
