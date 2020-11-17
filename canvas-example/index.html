@@ -4,8 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HTML5手机微信抽奖大转盘特效代码 - 代码库</title>
-
+<title>抽奖</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 
 <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
@@ -19,16 +18,45 @@ var turnplate={
 		textRadius:155,				//大转盘奖品位置距离圆心的距离
 		insideRadius:68,			//大转盘内圆的半径
 		startAngle:0,				//开始角度
-		
 		bRotate:false				//false:停止;ture:旋转
 };
 
 $(document).ready(function(){
 	//动态添加大转盘的奖品与奖品区域背景颜色
-	turnplate.restaraunts = ["50M免费流量包", "10闪币", "谢谢参与", "5闪币", "10M免费流量包", "20M免费流量包", "20闪币 ", "30M免费流量包", "100M免费流量包", "2闪币"];
+	turnplate.restaraunts = [{
+    text:"50M免费流量包",
+    value:1
+  },{
+    text:"10闪币",
+    value:2
+  },{
+    text:"10M免费流量包",
+    value:3
+  },{
+    text:"20M免费流量包",
+    value:4
+  },{
+    text:"谢谢参与",
+    value:5
+  },{
+    text:"50M免费流量包",
+    value:1
+  },{
+    text:"10闪币",
+    value:2
+  },{
+    text:"10M免费流量包",
+    value:3
+  },{
+    text:"20M免费流量包",
+    value:4
+  },{
+    text:"谢谢参与",
+    value:5
+  }];
 	turnplate.colors = ["#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF", "#FFF4D6", "#FFFFFF","#FFF4D6", "#FFFFFF"];
 
-	
+  //设置网络请求超时
 	var rotateTimeOut = function (){
 		$('#wheelcanvas').rotate({
 			angle:0,
@@ -41,20 +69,20 @@ $(document).ready(function(){
 	};
 
 	//旋转转盘 item:奖品位置; txt：提示语;
-	var rotateFn = function (item, txt){
-		var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
+	var rotateFn = function (item, info){
+    var angles = item * (360 / turnplate.restaraunts.length) - (360 / (turnplate.restaraunts.length*2));
 		if(angles<270){
 			angles = 270 - angles; 
 		}else{
 			angles = 360 - angles + 270;
-		}
+    }
 		$('#wheelcanvas').stopRotate();
 		$('#wheelcanvas').rotate({
 			angle:0,
 			animateTo:angles+1800,
 			duration:8000,
 			callback:function (){
-				alert(txt);
+				alert(info.text);
 				turnplate.bRotate = !turnplate.bRotate;
 			}
 		});
@@ -64,7 +92,7 @@ $(document).ready(function(){
 		if(turnplate.bRotate) return;
 		turnplate.bRotate = !turnplate.bRotate;
 		//获取随机数(奖品个数范围内)
-		var item = 1  //rnd(1,turnplate.restaraunts.length);
+		var item = 5  //rnd(1,turnplate.restaraunts.length);
 		//奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
 		rotateFn(item, turnplate.restaraunts[item-1]);
 	});
@@ -108,7 +136,7 @@ function drawRouletteWheel() {
 		  
 		  //----绘制奖品开始----
 		  ctx.fillStyle = "#E5302F";
-		  var text = turnplate.restaraunts[i];
+		  var text = turnplate.restaraunts[i].text;
 		  var line_height = 17;
 		  //translate方法重新映射画布上的 (0,0) 位置
 		  ctx.translate(211 + Math.cos(angle + arc / 2) * turnplate.textRadius, 211 + Math.sin(angle + arc / 2) * turnplate.textRadius);
