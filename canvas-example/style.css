@@ -14,8 +14,23 @@ a:hover{color:#c00; text-decoration:none;}
   margin-left:auto;
   margin-right:auto;
   margin-bottom: 20px;
+  position: relative;
   overflow: hidden;
 }
+
+.banner .banner-content{
+  overflow: hidden;
+  position: relative;
+}
+
+.bottom-img-wrapper,.top-img-wrapper{
+  position: absolute;
+}
+
+.top-img-wrapper{
+  top: 200px;
+}
+
 .banner .turnplate{display:block;width:100%;position:relative;}
 .banner .turnplate canvas.item{width:100%;}
 .banner .turnplate img.pointer{position:absolute;width:31.5%;height:42.5%;left:34.6%;top:23%;}
