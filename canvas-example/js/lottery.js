@@ -1,38 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>抽奖</title>
-  <link href="style.css" rel="stylesheet" type="text/css">
-</head>
-
-<body style="background:#e62d2d;overflow-x:hidden;">
-  <img src="images/1.png" id="shan-img" style="display:none;" />
-  <img src="images/2.png" id="sorry-img" style="display:none;" />
-  <img src="images/2.jpg" id="rest-img" style="display:none;" />
-	<div class="banner">
-    <div class="banner-content">
-      <div class="bottom-img-wrapper">
-        <img src="./images/bg4.jpg" alt="">
-      </div>
-      <div class="canvas-wrapper">
-        <div class="turnplate" style="background-image:url(images/turnplate-bg.png);background-size:100% 100%;">
-          <canvas class="item" id="wheelcanvas" width="844px" height="844px"></canvas>
-          <img class="pointer" src="images/turnplate-pointer.png"/>
-        </div>
-      </div>
-      <!-- <div class="top-img-wrapper">
-        <img src="./images/bg5.jpg" alt="">
-      </div> -->
-    </div>
-	</div>
-<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="js/ele-rotate.js"></script>
-<script type="text/javascript">
 const REMOTE_URL = 'http://192.168.31.203:8080'
-let winLoaded = false
 
 var turnplate={
 		restaraunts:[],				//大转盘奖品名称
@@ -50,6 +16,7 @@ for(let i=0;i<10;i++){
   wheelColors.push(['#FFF4D6','#FFFFFF'][i%2])
 }
 
+// 进入页面时获取抽奖信息
 function getLotteryInfo(callBack){
   const params = {
     userId:"1",
@@ -60,7 +27,6 @@ function getLotteryInfo(callBack){
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/detail.json',  
-    async: false,
     data: JSON.stringify(params),    
     contentType: "application/json;charset=UTF-8",  
     dataType: "json",
@@ -72,9 +38,26 @@ function getLotteryInfo(callBack){
   })
 }
 
+// 用户点击抽奖时获取中奖信息
+function getWinInfo(callBack){
+  const params = {userId:"772891205",lotteryId:"1",cellId:"5359852",datetime:"2021-01-17 14:05:01"}
+  $.ajax({
+    type: "post",  
+    url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/draw.json',  
+    data: JSON.stringify(params),    
+    contentType: "application/json;charset=UTF-8",  
+    dataType: "json",
+    success: function(res) {  
+      console.log(res)
+      if(res.code == 200){
+        // callBack(res.data)
+      }
+    }  
+  })
+}
+
 //页面所有元素加载完毕后执行drawRouletteWheel()方法对转盘进行渲染
 window.onload=function(){
-  winLoaded = true
 	// drawRouletteWheel();
 };
 
@@ -135,7 +118,8 @@ $(document).ready(function(){
 
 	$('.pointer').click(function (){
 		if(turnplate.bRotate) return;
-		turnplate.bRotate = !turnplate.bRotate;
+    turnplate.bRotate = !turnplate.bRotate;
+    getWinInfo()
 		//获取随机数(奖品个数范围内)
 		var item = 5  //rnd(1,turnplate.restaraunts.length);
 		//奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
@@ -269,11 +253,5 @@ function drawRouletteWheel() {
         }
       }
     },100)
-
-
-     
   } 
 }
-</script>
-</body>
-</html>
