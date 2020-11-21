@@ -23,7 +23,6 @@ function getLotteryInfo(callBack){
     lotteryId:"1",
     cellId:"3"
   }
-
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/detail.json',  
@@ -80,9 +79,17 @@ function drawWheelByImgs(imgs){
   },100)
 }
 
+// 设置中奖机会次数
+function setChanceCount(total = 0,remain = 0){
+  $('#totalChance').text(total)
+  $('#leftChance').text(remain)
+}
+
 $(document).ready(function(){
   getLotteryInfo(function(data){
     console.log(data)
+
+    setChanceCount(3,1)
     const awardlist = data.awardlist
     let wheelList = []
     let imgs = []
@@ -149,6 +156,7 @@ $(document).ready(function(){
     if(turnplate.bRotate) return;
     turnplate.bRotate = !turnplate.bRotate;
     getWinInfo(function(data){
+      setChanceCount(3,0)
       data.isWin = true
       data.winAwardId = 5
       if(data.isWin){
