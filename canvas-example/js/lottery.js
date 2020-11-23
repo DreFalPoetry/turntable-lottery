@@ -86,6 +86,7 @@ function setChanceCount(total = 0,remain = 0){
 }
 
 $(document).ready(function(){
+  document.body.addEventListener('touchstart', function () {});
   getLotteryInfo(function(data){
     console.log(data)
 
@@ -150,9 +151,13 @@ $(document).ready(function(){
         turnplate.bRotate = !turnplate.bRotate;
 			}
 		});
-	};
+  };
+  
+  $('#myRecordBtn').click(function(){
+    window.location.href = "../winning-recoed.html"
+  })
 
-	$('.pointer').click(function (){
+	$('#lotteryBtn').click(function (){
     if(turnplate.bRotate) return;
     turnplate.bRotate = !turnplate.bRotate;
     getWinInfo(function(data){

@@ -1,0 +1,254 @@
+﻿.container{
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #FF4052;
+}
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background-image: url('../images/title-text-img@2x.png');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.my-record-button{
+  position: absolute;
+  width: 2.4rem;
+  height: 0.7rem;
+  line-height: 0.7rem;
+  text-align: center;
+  border-radius: 0.35rem 0px 0px 0.35rem;
+  right: 0px;
+  top: 1.3rem;
+  background: #FCEE11;
+  font-weight: bold;
+  color: #FF4052;
+  font-size: 0.3rem;
+  font-weight: bold;
+  box-shadow: 5px 8px 8px 0px rgba(0, 0, 0, 0.14);
+}
+
+.lottery-rule-btn{
+  width: 2rem;
+  height: .8rem;
+  line-height: .8rem;
+  background: linear-gradient(180deg, #FEF9F8, #DDD5C7);
+  box-shadow: 0px 7px 35px 0px rgba(169, 0, 0, 0.28);
+  border-radius: 0.39rem;
+  margin-top: 5.6rem;
+  font-size: 0.28rem;
+  font-weight: bold;
+  color: #FE6146;
+  text-align: center;
+}
+
+#ruleTabel{
+  width: 7.1rem;
+  font-size: 0.28rem;  
+  text-align: center;
+  border: 1px solid #FCEE11;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius : 0.2rem;
+  overflow: hidden;
+  margin-top: 0.2rem;
+}
+
+#ruleTabel thead td{
+  height: 0.8rem;
+}
+
+#ruleTabel thead td{
+  background: #FCEE11;
+  border: 1px solid #FCEE11;
+  border-top: none;
+  color: #FF4351;
+  font-size: 0.28rem;
+  font-weight: bold;
+}
+
+#ruleTabel thead td:first-child,#ruleTabel thead td:last-child{
+  border: none;
+  border-bottom: 1px solid #FCEE11;
+}
+
+#ruleTabel tbody td{
+  height: 0.8rem;
+  border-right:1px solid #FCEE11;
+  border-bottom:1px solid #FCEE11;
+  padding: 0.05rem;
+  color: #fff;
+  font-size: 0.24rem;
+  font-family: PingFang SC;
+}
+
+#ruleTabel tbody tr td:last-child{
+  border-right:none;
+}
+
+#ruleTabel tbody tr:last-child td{
+  border-bottom: none;
+}
+
+.remain-chance-text{
+  margin-top: 0.5rem;
+  font-size: 0.4rem;
+  font-weight: bold;
+  color: transparent;
+  background: linear-gradient(to right, #FCC18D 0%, #FFF9E6 29.931640625%, #FFF9E6 53.4423828125%, #FFF9E6 77.7587890625%, #FCB77D 100%);
+  -webkit-background-clip: text;
+}
+
+/* 大转盘样式 */
+.banner{
+  display:block;
+  width: 100%;
+  margin-top: 0.4rem;
+}
+
+.banner .banner-content{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 9.6rem;
+  position: relative;
+}
+
+.bottom-img-wrapper,.top-img-wrapper{
+  position: absolute;
+}
+
+.bottom-img-wrapper{
+  top: 5.2rem;
+}
+.bottom-img-wrapper img{
+  display: block;
+  width: 7.5rem;
+  height: 0.99rem;
+}
+
+.top-img-wrapper{
+  top: 6.19rem;
+  height: 3.5rem;
+  overflow: hidden;
+}
+
+.top-img-wrapper img{
+  display: block;
+  width: 7.5rem;
+  height: auto;
+}
+
+.lottery-btn{
+  width: 3rem;
+  height: 0.9rem;
+  position: absolute;
+  top: 6.7rem;
+  left: 50%;
+  margin-left: -1.5rem;
+  background: url('../images/lottery-btn@2x.png') no-repeat left top;
+  background-size: 100% 100%;
+}
+
+.lottery-btn:active{
+  background: url('../images/lottery-btn-click@2x.png') no-repeat left top;
+  background-size: 100% 100%;
+}
+
+.lottery-btn img{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.banner .turnplate{
+  display:block;
+  width:6.5rem;
+  height: 6.5rem;
+  position:relative;
+}
+
+.banner .turnplate canvas.item{
+  width:100%;
+}
+
+.banner .turnplate img.pointer{
+  position:absolute;
+  width: 0.5rem;
+  height: 1.8rem;
+  left: 50%;
+  margin-left: -0.25rem;
+  bottom: 47%;
+}
+
+.remain-chance{
+  font-size: 0.32rem;
+}
+
+.mode-partake-container{
+  width: 100%;
+  background-color: #FFEC59;
+  display: flex;
+  justify-content: center;
+}
+
+.mode-partake-wrapper{
+  width: 6.9rem;
+  background: #FE6146;
+  box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.13);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 0.2rem;
+  overflow: hidden;
+  box-sizing: border-box;
+  margin-bottom: 0.84rem;
+  margin-top: 0.1rem;
+}
+
+.mode-partake-header{
+  width: 2.93rem;
+  height: 0.4rem;
+  margin: 0.33rem 0px 0.28rem;
+}
+
+.mode-partake-header img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.mode-partake-wrapper .mode-partake-list{
+  margin-bottom: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 0.2rem 0.3rem;
+  border-radius: 0.2rem;
+  overflow: hidden;
+}
+
+.mode-partake-list-title p{  
+  font-size: 0.34rem;
+  font-weight: bold;
+  color: #FF5629;
+}
+
+.mode-partake-list-title span{
+  font-size: 0.24rem;
+  font-weight: 800;
+}
+
+.mode-partake-list-desc{
+  font-size: 0.24rem;
+  font-weight: bold;
+  color: #333333;
+  margin-top: 0.1rem;
+}
