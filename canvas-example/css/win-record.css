@@ -7,7 +7,7 @@
 }
 
 .content{
-  width: 100%;
+  width: 7.5rem;
   height: 13.34rem;
   display: flex;
   flex-direction: column;
@@ -51,6 +51,7 @@
   font-weight: 400;
   color: #333333;
   text-align: center;
+  width: 100%;
 }
 
 .win-record img,.lottery-timer img{

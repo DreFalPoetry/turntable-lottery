@@ -8,7 +8,8 @@ let turnplate={
 		insideRadius:68*2,			//大转盘内圆的半径
 		startAngle:0,				//开始角度
     bRotate:false,				//false:停止;ture:旋转
-    winPrizeInd:null
+    winPrizeInd:null,
+    hasLeftChance:false
 };
 
 let wheelColors = []
@@ -89,7 +90,7 @@ $(document).ready(function(){
   document.body.addEventListener('touchstart', function () {});
   getLotteryInfo(function(data){
     console.log(data)
-
+    turnplate.hasLeftChance = true
     setChanceCount(3,1)
     const awardlist = data.awardlist
     let wheelList = []
@@ -159,8 +160,13 @@ $(document).ready(function(){
 
 	$('#lotteryBtn').click(function (){
     if(turnplate.bRotate) return;
+    if(!turnplate.hasLeftChance){
+      alert('机会已经用完')
+      return;
+    } 
     turnplate.bRotate = !turnplate.bRotate;
     getWinInfo(function(data){
+      turnplate.hasLeftChance = false
       setChanceCount(3,0)
       data.isWin = true
       data.winAwardId = 5
