@@ -155,7 +155,7 @@ $(document).ready(function(){
   };
   
   $('#myRecordBtn').click(function(){
-    window.location.href = "../winning-recoed.html"
+    window.location.href = "../winning-record.html"
   })
 
 	$('#lotteryBtn').click(function (){

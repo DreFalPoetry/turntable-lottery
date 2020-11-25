@@ -14,6 +14,7 @@ const server = (done) => {
   connect.server({ //创建服务器
       root: 'dist',//根目录
       port: '2000',//端口号
+      host: '0.0.0.0',
       livereload:true,//服务器热更新
   })
   done()
@@ -101,14 +102,14 @@ const watchHandler = function(){
 }
 
 // 开发环境
-// module.exports.default = gulp.series(
-//   delHandler,
-//   gulp.parallel(cssHandler,jsHandler,commonJsHandler,imgHandler,htmlHandler,watchHandler,server),
-// );
-
-// 生产环境
 module.exports.default = gulp.series(
   delHandler,
-  gulp.parallel(cssHandlerProd,jsHandlerProd,commonJsHandler,imgHandler),
-  htmlHandlerProd
+  gulp.parallel(cssHandler,jsHandler,commonJsHandler,imgHandler,htmlHandler,watchHandler,server),
 );
+
+// 生产环境
+// module.exports.default = gulp.series(
+//   delHandler,
+//   gulp.parallel(cssHandlerProd,jsHandlerProd,commonJsHandler,imgHandler),
+//   htmlHandlerProd
+// );
