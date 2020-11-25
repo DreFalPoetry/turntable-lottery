@@ -26,6 +26,8 @@
     "gulp-html-replace": "^1.6.2",
     "gulp-htmlmin": "^5.0.1",
     "gulp-ignore": "^3.0.0",
+    "gulp-rev": "^9.0.0",
+    "gulp-rev-rewrite": "^4.0.0",
     "gulp-uglify": "^3.0.2"
   },
   "dependencies": {}
