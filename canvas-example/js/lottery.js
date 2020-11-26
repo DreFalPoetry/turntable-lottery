@@ -17,13 +17,25 @@ for(let i=0;i<10;i++){
   wheelColors.push(['#FFF4D6','#FFFFFF'][i%2])
 }
 
+function getQueryVariable(variable){
+  let query = window.location.search.substring(1);
+  let vars = query.split("&");
+  for (let i=0;i<vars.length;i++) {
+    let pair = vars[i].split("=");
+    if(pair[0] == variable){return pair[1];}
+  }
+  return(false);
+}
+
 // 进入页面时获取抽奖信息
 function getLotteryInfo(callBack){
-  const params = {
-    userId:"1",
-    lotteryId:"1",
-    cellId:"3"
+  const userId = getQueryVariable('userId')
+  const cellId = getQueryVariable('cellId')
+  if(!userId || !cellId){
+    alert('url wrong')
+    return
   }
+  let params = {lotteryId:"1", userId, cellId} 
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/detail.json',  
@@ -88,6 +100,7 @@ function setChanceCount(total = 0,remain = 0){
 
 $(document).ready(function(){
   document.body.addEventListener('touchstart', function () {});
+
   getLotteryInfo(function(data){
     console.log(data)
     turnplate.hasLeftChance = true
