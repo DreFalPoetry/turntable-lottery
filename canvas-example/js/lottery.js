@@ -9,7 +9,11 @@ let turnplate={
 		startAngle:0,				//开始角度
     bRotate:false,				//false:停止;ture:旋转
     winPrizeInd:null,
-    hasLeftChance:false
+    lotteryInfo:{
+      vaild:false,
+      text:''
+    },
+    leftChance:0
 };
 
 let wheelColors = []
@@ -27,12 +31,31 @@ function getQueryVariable(variable){
   return(false);
 }
 
+function showTooltip(msg){
+  alert(msg)
+}
+
+function setLotteryInfo(vaild,text){
+  if(vaild){
+    turnplate.lotteryInfo.vaild = true
+  }else{
+    turnplate.lotteryInfo.vaild = false
+    turnplate.lotteryInfo.text = text
+    showTooltip(text)
+  }
+}
+
+function resetbRotate(msg){
+  turnplate.bRotate = false
+  showTooltip(msg)
+}
+
 // 进入页面时获取抽奖信息
 function getLotteryInfo(callBack){
   const userId = getQueryVariable('userId')
   const cellId = getQueryVariable('cellId')
   if(!userId || !cellId){
-    alert('url wrong')
+    showTooltip('url wrong')
     return
   }
   let params = {lotteryId:"1", userId, cellId} 
@@ -45,7 +68,12 @@ function getLotteryInfo(callBack){
     success: function(res) {  
       if(res.code == 200){
         callBack(res.data)
+      }else{
+        setLotteryInfo(false,'后端返回的信息******信息')  
       }
+    },
+    error:function(err){
+      setLotteryInfo(false,'网络请求失败 请刷新后重试')
     }  
   })
 }
@@ -63,11 +91,12 @@ function getWinInfo(callBack){
     success: function(res) {  
       if(res.code == 200){
         callBack(res.data)
+      }else{
+        resetbRotate('服务端返回代码***返回')
       }
     },
     error:function(err){
-      alert('请求超时 请稍后重试')
-      turnplate.bRotate = !turnplate.bRotate;
+      resetbRotate('请求超时 请刷新重试')
     } 
   })
 }
@@ -87,6 +116,7 @@ function drawWheelByImgs(imgs){
     if(Object.keys(imgsDoneObj).length == 5){
       console.log('all done ======')
       clearInterval(timer)
+      setLotteryInfo(true)
       drawRouletteWheel(imgsDoneObj)
     }
   },100)
@@ -103,7 +133,7 @@ $(document).ready(function(){
 
   getLotteryInfo(function(data){
     console.log(data)
-    turnplate.hasLeftChance = true
+    turnplate.leftChance = 1
     setChanceCount(3,1)
     const awardlist = data.awardlist
     let wheelList = []
@@ -142,7 +172,7 @@ $(document).ready(function(){
 			animateTo:2160,
 			duration:8000,
 			callback:function (){
-				alert('网络超时，请检查您的网络设置！');
+				showTooltip('网络超时，请检查您的网络设置！');
 			}
 		});
 	};
@@ -161,8 +191,7 @@ $(document).ready(function(){
 			animateTo: angles+3600,
 			duration: 10000,
 			callback:function (){        
-        alert(info.awardSubName);
-        turnplate.bRotate = !turnplate.bRotate;
+        resetbRotate(info.awardSubName)
 			}
 		});
   };
@@ -173,13 +202,21 @@ $(document).ready(function(){
 
 	$('#lotteryBtn').click(function (){
     if(turnplate.bRotate) return;
-    if(!turnplate.hasLeftChance){
-      alert('机会已经用完')
+    if(!turnplate.lotteryInfo.vaild){
+      if(turnplate.lotteryInfo.text){
+        showTooltip(turnplate.lotteryInfo.text)
+      }else{
+        showTooltip('网络请求中，请稍后')
+      }
+      return;
+    }
+    if(turnplate.leftChance === 0){
+      showTooltip('机会已经用完')
       return;
     } 
-    turnplate.bRotate = !turnplate.bRotate;
+    turnplate.bRotate = true;
     getWinInfo(function(data){
-      turnplate.hasLeftChance = false
+      turnplate.leftChance = 0
       setChanceCount(3,0)
       data.isWin = true
       data.winAwardId = 5
