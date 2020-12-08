@@ -1,7 +1,27 @@
 const REMOTE_URL = 'http://192.168.31.203:8080'
 
+function getQueryVariable(variable){
+  let query = window.location.search.substring(1);
+  let vars = query.split("&");
+  for (let i=0;i<vars.length;i++) {
+    let pair = vars[i].split("=");
+    if(pair[0] == variable){return pair[1];}
+  }
+  return(false);
+}
+
+function showTooltip(msg){
+  alert(msg)
+}
+
 function getUserLotteryRecord(callback){
-  const params = {userId:"772891205",lotteryId:"1",cellId:"5359852"}
+  const userId = getQueryVariable('userId')
+  const cellId = getQueryVariable('cellId')
+  if(!userId || !cellId){
+    showTooltip('url wrong')
+    return
+  }
+  const params = {userId,cellId,lotteryId:"1"}
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/history.json',  
@@ -9,12 +29,14 @@ function getUserLotteryRecord(callback){
     contentType: "application/json;charset=UTF-8",  
     dataType: "json",
     success: function(res) {  
-      if(res.code == 200){
+      if(res.code == 200 && res.data && res.data.length){
         callback(res.data)
+      }else{
+        showTooltip(res.msg)
       }
     },
     error:function(err){
-      alert('请求失败')
+      showTooltip('请求失败')
     } 
   })
 }
@@ -32,6 +54,5 @@ $(function(){
       recordDom += '<td>' + data[i].DRAW_TIME + '</td></tr>'
     }
     $('#recordTabel tbody').html(recordDom)
-
   })
 })

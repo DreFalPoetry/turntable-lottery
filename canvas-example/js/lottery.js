@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.31.203:8080'
+const REMOTE_URL = 'http://192.168.251.24:8080'
 
 let turnplate={
 		restaraunts:[],				//大转盘奖品名称
@@ -40,6 +40,8 @@ function setLotteryInfo(vaild,text){
     turnplate.lotteryInfo.vaild = true
   }else{
     turnplate.lotteryInfo.vaild = false
+  }
+  if(text){
     turnplate.lotteryInfo.text = text
     showTooltip(text)
   }
@@ -58,6 +60,7 @@ function getLotteryInfo(callBack){
     showTooltip('url wrong')
     return
   }
+  setLotteryInfo(false)
   let params = {lotteryId:"1", userId, cellId} 
   $.ajax({
     type: "post",  
@@ -69,11 +72,11 @@ function getLotteryInfo(callBack){
       if(res.code == 200){
         callBack(res.data)
       }else{
-        setLotteryInfo(false,'后端返回的信息******信息')  
+        setLotteryInfo(true,'后端返回的信息******信息')  
       }
     },
     error:function(err){
-      setLotteryInfo(false,'网络请求失败 请刷新后重试')
+      setLotteryInfo(true,'网络请求失败 请刷新后重试')
     }  
   })
 }
