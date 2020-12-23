@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.251.24:8080'
+const REMOTE_URL = 'http://192.168.43.187:8080'
 
 let turnplate={
 		restaraunts:[],				//大转盘奖品名称
@@ -44,6 +44,8 @@ function setLotteryInfo(vaild,text){
   if(text){
     turnplate.lotteryInfo.text = text
     showTooltip(text)
+  }else{
+    turnplate.lotteryInfo.text = ''
   }
 }
 
@@ -57,7 +59,7 @@ function getLotteryInfo(callBack){
   const userId = getQueryVariable('userId')
   const cellId = getQueryVariable('cellId')
   if(!userId || !cellId){
-    showTooltip('url wrong')
+    setLotteryInfo(false, '请求参数有误')
     return
   }
   setLotteryInfo(false)
@@ -72,11 +74,11 @@ function getLotteryInfo(callBack){
       if(res.code == 200){
         callBack(res.data)
       }else{
-        setLotteryInfo(true,'后端返回的信息******信息')  
+        setLotteryInfo(false, res.msg)  
       }
     },
     error:function(err){
-      setLotteryInfo(true,'网络请求失败 请刷新后重试')
+      setLotteryInfo(false,'网络请求失败 请刷新页面后重试')
     }  
   })
 }
@@ -95,7 +97,7 @@ function getWinInfo(callBack){
       if(res.code == 200){
         callBack(res.data)
       }else{
-        resetbRotate('服务端返回代码***返回')
+        resetbRotate(res.msg)
       }
     },
     error:function(err){
@@ -108,7 +110,7 @@ function getWinInfo(callBack){
 function drawWheelByImgs(imgs){
   let imgsDoneObj = {}
   for(let i=0;i<imgs.length;i++){
-    let _tempImg = new Image()
+    let _tempImg = new Image(50, 50)
     _tempImg.src = imgs[i].src
     _tempImg.onload = function(){
       imgsDoneObj[imgs[i].id] = _tempImg 
@@ -127,7 +129,9 @@ function drawWheelByImgs(imgs){
 
 // 设置中奖机会次数
 function setChanceCount(total = 0,remain = 0){
-  $('#totalChance').text(total)
+  if(total!=null){
+    $('#totalChance').text(total)
+  }
   $('#leftChance').text(remain)
 }
 
@@ -136,23 +140,27 @@ $(document).ready(function(){
 
   getLotteryInfo(function(data){
     console.log(data)
-    turnplate.leftChance = 1
-    setChanceCount(3,1)
+    turnplate.leftChance = data.leftChance
+    setChanceCount(data.totalChance,data.leftChance)
     const awardlist = data.awardlist
     let wheelList = []
     let imgs = []
     for(let i=0;i<2;i++){
+      // 设置实体奖项
       for(let j=0; j<awardlist.length; j++){
         awardlist[j].position = j + 1
         wheelList.push(awardlist[j])
-        imgs.push({
-          id:awardlist[j].id,
-          src:"https://picsum.photos/20/20"
-        })
+        if(i == 0 ){
+          imgs.push({
+            id:awardlist[j].id,
+            src:awardlist[j].awardPic
+          })
+        }
       }
+      // 设置参与奖
       wheelList.push({
         type:'lucky',
-        awardName: "谢谢参与",
+        awardName: "未中奖",
         awardSubName:"谢谢参与",
         position:5
       })
@@ -161,6 +169,7 @@ $(document).ready(function(){
       id:'lucky',
       src:"https://picsum.photos/30/30"
     })
+    console.log('all imgs',imgs)
     console.log(wheelList)
     //动态添加大转盘的奖品与奖品区域背景颜色
     turnplate.restaraunts = wheelList
@@ -194,13 +203,19 @@ $(document).ready(function(){
 			animateTo: angles+3600,
 			duration: 10000,
 			callback:function (){        
-        resetbRotate(info.awardSubName)
+        const awardName = info.awardName + ':' + info.awardSubName 
+        resetbRotate(awardName)
 			}
 		});
   };
   
   $('#myRecordBtn').click(function(){
-    window.location.href = "../winning-record.html"
+    const userId = getQueryVariable('userId')
+    const cellId = getQueryVariable('cellId')
+    if(!userId || !cellId){
+      return
+    }
+    window.location.href = "../winning-record.html?userId=" + userId + '&cellId=' + cellId
   })
 
 	$('#lotteryBtn').click(function (){
@@ -219,10 +234,8 @@ $(document).ready(function(){
     } 
     turnplate.bRotate = true;
     getWinInfo(function(data){
-      turnplate.leftChance = 0
-      setChanceCount(3,0)
-      data.isWin = true
-      data.winAwardId = 5
+      turnplate.leftChance = data.leftChance
+      setChanceCount(null,data.leftChance)
       if(data.isWin){
         console.log(data.winAwardId)
         let item = 5
@@ -233,6 +246,8 @@ $(document).ready(function(){
           }
         }
         rotateFn(item, turnplate.restaraunts[item-1]);
+      }else{
+        rotateFn(5, turnplate.restaraunts[4]);
       }
     })
 		//获取随机数(奖品个数范围内)
@@ -273,6 +288,7 @@ function drawRouletteWheel(imgsDone) {
       
       //----绘制奖品开始----
       ctx.fillStyle = "#E5302F";
+      var awardTitle = turnplate.restaraunts[i].awardName;
       var text = turnplate.restaraunts[i].awardSubName;
       let itemId = turnplate.restaraunts[i].id;
       var line_height = 25;
@@ -294,21 +310,24 @@ function drawRouletteWheel(imgsDone) {
       // 	  }
       //   }
       // }else 
+      // 设置奖项
+      ctx.fillText(awardTitle, -ctx.measureText(awardTitle).width / 2, 0);
+      // 设置奖项名
       if(text.length>6){//奖品名称长度超过一定范围 
         text = text.substring(0,6)+"-@@@-"+text.substring(6);
         var texts = text.split("-@@@-");
         for(var j = 0; j<texts.length; j++){
-          ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, j * line_height);
+          ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, 35 + j * line_height);
         }
       }else{
         //在画布上绘制填色的文本。文本的默认颜色是黑色
         //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
-        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+        ctx.fillText(text, -ctx.measureText(text).width / 2, 35);
       }
       if(itemId){
-        ctx.drawImage(imgsDone[itemId],-15,10);
+        ctx.drawImage(imgsDone[itemId],-25,50, 50, 50);
       }else{
-        ctx.drawImage(imgsDone['lucky'] ,-15,10);  
+        ctx.drawImage(imgsDone['lucky'] ,-25,50, 50, 50);  
       }
       
       //添加对应图标

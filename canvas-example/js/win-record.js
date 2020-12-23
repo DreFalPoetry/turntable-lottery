@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.31.203:8080'
+const REMOTE_URL = 'http://192.168.43.187:8080'
 
 function getQueryVariable(variable){
   let query = window.location.search.substring(1);
@@ -18,7 +18,7 @@ function getUserLotteryRecord(callback){
   const userId = getQueryVariable('userId')
   const cellId = getQueryVariable('cellId')
   if(!userId || !cellId){
-    showTooltip('url wrong')
+    showTooltip('请求参数有误')
     return
   }
   const params = {userId,cellId,lotteryId:"1"}
@@ -36,7 +36,7 @@ function getUserLotteryRecord(callback){
       }
     },
     error:function(err){
-      showTooltip('请求失败')
+      showTooltip('请求失败,请刷新后重试')
     } 
   })
 }
