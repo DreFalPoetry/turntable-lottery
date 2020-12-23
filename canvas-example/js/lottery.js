@@ -63,7 +63,7 @@ function getLotteryInfo(callBack){
     return
   }
   setLotteryInfo(false)
-  let params = {lotteryId:"1", userId, cellId} 
+  let params = {lotteryCode:"WUYEFEI_2021", userId, cellId} 
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/detail.json',  
@@ -85,7 +85,7 @@ function getLotteryInfo(callBack){
 
 // 用户点击抽奖时获取中奖信息
 function getWinInfo(callBack){
-  const params = {userId:"772891205",lotteryId:"1",cellId:"5359852",datetime:"2021-01-17 14:05:01"}
+  const params = {userId:"774184802",lotteryCode:"WUYEFEI_2021",cellId:"9340159",datetime:"2021-01-17 14:05:01"}
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/draw.json',  
