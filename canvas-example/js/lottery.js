@@ -87,7 +87,7 @@ function getLotteryInfo(callBack){
 function getWinInfo(callBack){
   const userId = getQueryVariable('userId')
   const cellId = getQueryVariable('cellId')
-  const params = {userId,cellId,lotteryCode:"WUYEFEI_2021",datetime:"2021-01-17 14:05:01"}
+  const params = {userId,cellId,lotteryCode:"WUYEFEI_2021"}
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/draw.json',  
