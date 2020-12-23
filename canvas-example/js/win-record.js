@@ -21,7 +21,7 @@ function getUserLotteryRecord(callback){
     showTooltip('请求参数有误')
     return
   }
-  const params = {userId,cellId,lotteryId:"1"}
+  const params = {userId,cellId,lotteryCode:"WUYEFEI_2021"}
   $.ajax({
     type: "post",  
     url:  REMOTE_URL + '/kangyunyoujia-api/activity/lottery/history.json',  
