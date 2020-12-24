@@ -32,7 +32,10 @@ function getQueryVariable(variable){
 }
 
 function showTooltip(msg){
-  alert(msg)
+  $('#lotteryTip').text(msg).show()
+  setTimeout(() => {
+    $('#lotteryTip').text('').hide()
+  }, 3000);
 }
 
 function setLotteryInfo(vaild,text){

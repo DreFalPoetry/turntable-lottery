@@ -11,7 +11,10 @@ function getQueryVariable(variable){
 }
 
 function showTooltip(msg){
-  alert(msg)
+  $('#recordTip').text(msg).show()
+  setTimeout(() => {
+    $('#recordTip').text('').hide()
+  }, 3000);
 }
 
 function getUserLotteryRecord(callback){

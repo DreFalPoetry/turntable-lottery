@@ -31,3 +31,22 @@ body,html{
   font-family:"Helvetica Neue", Helvetica, sans-serif;
   overflow: hidden;
 }
+
+.tips{
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 0.26rem;
+  padding: 0.2rem 0.5rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hidden{
+  display: none;
+}
+
+*{
+  -webkit-overflow-scrolling: touch;
+}
