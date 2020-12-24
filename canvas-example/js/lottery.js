@@ -88,6 +88,7 @@ function getLotteryInfo(callBack){
 
 // 用户点击抽奖时获取中奖信息
 function getWinInfo(callBack){
+  $('.lottery-btn').addClass('active')
   const userId = getQueryVariable('userId')
   const cellId = getQueryVariable('cellId')
   const params = {userId,cellId,lotteryCode:"WUYEFEI_2021"}
@@ -99,6 +100,7 @@ function getWinInfo(callBack){
     dataType: "json",
     timeout:5000,
     success: function(res) {  
+      $('.lottery-btn').removeClass('active')
       if(res.code == 200){
         callBack(res.data)
       }else{
@@ -106,6 +108,7 @@ function getWinInfo(callBack){
       }
     },
     error:function(err){
+      $('.lottery-btn').removeClass('active')
       resetbRotate('请求超时 请刷新重试')
     } 
   })

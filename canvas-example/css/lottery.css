@@ -11,7 +11,8 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  background-image: url('../images/title-text-img@2x.png');
+  background-image: url('../images/lottery_bg.gif');
+  background-position: center 0.5rem;
   background-repeat: no-repeat;
   background-size: 100% auto;
   min-height: 100%;
@@ -50,7 +51,7 @@
   text-align: center;
   border-radius: 0.35rem 0px 0px 0.35rem;
   right: 0px;
-  top: 1.3rem;
+  top: 0.9rem;
   background: #FCEE11;
   font-weight: bold;
   color: #FF4052;
@@ -66,7 +67,7 @@
   background: linear-gradient(180deg, #FEF9F8, #DDD5C7);
   box-shadow: 0px 7px 35px 0px rgba(169, 0, 0, 0.28);
   border-radius: 0.39rem;
-  margin-top: 5.6rem;
+  margin-top: 4rem;
   font-size: 0.28rem;
   font-weight: bold;
   color: #FE6146;
@@ -176,11 +177,11 @@
   top: 6.7rem;
   left: 50%;
   margin-left: -1.5rem;
-  background: url('../images/lottery-btn@2x.png') no-repeat left top;
+  background: url('../images/lottery-btn_1@2x.gif') no-repeat left top;
   background-size: 100% 100%;
 }
 
-.lottery-btn:active{
+.lottery-btn.active{
   background: url('../images/lottery-btn-click@2x.png') no-repeat left top;
   background-size: 100% 100%;
 }
