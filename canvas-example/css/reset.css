@@ -28,6 +28,6 @@ a:hover{
 body,html{
   width: 100%;
   height: 100%;
-  font-family:"Microsoft YaHei";
+  font-family:"Helvetica Neue", Helvetica, sans-serif;
   overflow: hidden;
 }
