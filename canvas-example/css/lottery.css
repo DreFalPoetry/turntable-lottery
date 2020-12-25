@@ -73,39 +73,106 @@
   text-align: center;
 }
 
+.table-wrapper{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #FFEC59;
+  padding-top: 0.2rem;
+}
+
+.table-inner{
+  width: 6.9rem;
+  background: #FE6146;
+  box-shadow: 6px 10px 9px 0px rgba(0, 0, 0, 0.13);
+  border-radius: 20px;
+  padding: 0px 0.1rem;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.flex-wrapper{
+  display: flex;
+  flex-direction: column;
+  font-size: 0.28rem;  
+}
+
+.flex-wrapper .divider{
+  height: 0.01rem;
+  width: 100%;
+  background: #fff;
+}
+
+.flex-wrapper .header{
+  margin-top: 0.2rem;
+}
+
+.flex-wrapper .header div{
+  background: #fff;
+  height: 0.6rem;
+  line-height: 0.6rem;
+  color: #FE6146;
+  border-top-left-radius: 0.2rem;
+  border-top-right-radius: 0.2rem;
+}
+
+.flex-wrapper .content{
+  margin: 0.1rem 0;
+  align-items: center;
+  font-size: 0.2rem;
+  color: #fff;
+  position: relative;
+}
+
+.flex-wrapper .content .dialog{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  border-radius: 0.2rem;
+}
+
+.grid-wrapper{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr;
+  text-align: center;
+}
+
+.grid-wrapper>div{
+  margin-right: 0.1rem;
+}
+
+.grid-wrapper>div:last-child{
+  margin-right: 0;
+}
+
+
 #ruleTabel{
-  width: 7.1rem;
+  width: 100%;
   font-size: 0.28rem;  
   text-align: center;
-  border: 1px solid #FCEE11;
-  border-top-left-radius: 0.2rem;
-  border-top-right-radius : 0.2rem;
+  /* border-top-left-radius: 0.2rem;
+  border-top-right-radius : 0.2rem; */
   overflow: hidden;
   margin-top: 0.2rem;
 }
 
 #ruleTabel thead td{
   height: 0.8rem;
-}
-
-#ruleTabel thead td{
-  background: #FCEE11;
-  border: 1px solid #FCEE11;
+  background: #fff;
+  border-right: 0.1rem solid #FE6146;
   border-top: none;
   color: #FF4351;
   font-size: 0.28rem;
   font-weight: bold;
-}
-
-#ruleTabel thead td:first-child,#ruleTabel thead td:last-child{
-  border: none;
-  border-bottom: 1px solid #FCEE11;
+  border-top-left-radius:0.2rem;
+  border-top-right-radius: 0.3rem;
 }
 
 #ruleTabel tbody td{
   height: 0.8rem;
-  border-right:1px solid #FCEE11;
-  border-bottom:1px solid #FCEE11;
+  /* border-right:1px solid #FCEE11; */
+  border-bottom:1px solid #ffffff;
   padding: 0.05rem;
   color: #fff;
   font-size: 0.24rem;
@@ -120,12 +187,20 @@
   border-bottom: none;
 }
 
+.remain-chance-text-wrapper{
+  width: 100%;
+  overflow: hidden;
+  background-color: #FFEC59;
+  text-align: center;
+}
+
 .remain-chance-text{
-  margin-top: 0.5rem;
+  font-size: 0.32rem;
   font-size: 0.4rem;
   font-weight: bold;
   color: transparent;
-  background: linear-gradient(to right, #FCC18D 0%, #FFF9E6 29.931640625%, #FFF9E6 53.4423828125%, #FFF9E6 77.7587890625%, #FCB77D 100%);
+  color: #FE6146;
+  /* background: linear-gradient(to right, #FCC18D 0%, #FFF9E6 29.931640625%, #FFF9E6 53.4423828125%, #FFF9E6 77.7587890625%, #FCB77D 100%); */
   -webkit-background-clip: text;
 }
 
@@ -133,7 +208,7 @@
 .banner{
   display:block;
   width: 100%;
-  margin-top: 0.4rem;
+  margin-top: 4rem;
 }
 
 .banner .banner-content{
@@ -211,10 +286,6 @@
   bottom: 47%;
 }
 
-.remain-chance{
-  font-size: 0.32rem;
-}
-
 .mode-partake-container{
   width: 100%;
   background-color: #FFEC59;
@@ -257,6 +328,16 @@
   padding: 0.2rem 0.3rem;
   border-radius: 0.2rem;
   overflow: hidden;
+  position: relative;
+}
+
+.mode-partake-list .dialog{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .mode-partake-list-title p{  

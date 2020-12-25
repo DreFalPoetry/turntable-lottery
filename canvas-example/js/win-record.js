@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.43.187:8080'
+const REMOTE_URL = 'http://192.168.31.203:8080'
 
 function getQueryVariable(variable){
   let query = window.location.search.substring(1);
