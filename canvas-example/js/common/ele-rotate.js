@@ -260,6 +260,15 @@ Wilq32.PhotoEffect.prototype={
 		else if (supportedCSS)
 		return function(angle){
             this._angle = angle;
+            this._img.style.transform = 'translateZ(0)'
+            this._img.style.webkitBackfaceVisibility = 'hidden'
+      this._img.style.mozBackfaceVisibility = 'hidden'
+      this._img.style.msBackfaceVisibility = 'hidden'
+      this._img.style.backfaceVisibility = 'hidden'
+      this._img.style.webkitPerspective = 1000
+      this._img.style.mozPerspective = 1000
+      this._img.style.msPerspective = 1000
+      this._img.style.perspective = 1000			
 			this._img.style[supportedCSS]="rotate("+(angle%360)+"deg)";
 		}
 		else 
@@ -270,7 +279,15 @@ Wilq32.PhotoEffect.prototype={
 			// clear canvas	
 			this._canvas.width = this._width+this._widthAdd;
 			this._canvas.height = this._height+this._heightAdd;
-						
+      this._cnv.style.transform = 'translateZ(0)'
+      this._cnv.style.webkitBackfaceVisibility = 'hidden'
+      this._cnv.style.mozBackfaceVisibility = 'hidden'
+      this._cnv.style.msBackfaceVisibility = 'hidden'
+      this._cnv.style.backfaceVisibility = 'hidden'
+      this._cnv.style.webkitPerspective = 1000
+      this._cnv.style.mozPerspective = 1000
+      this._cnv.style.msPerspective = 1000
+      this._cnv.style.perspective = 1000			
 			// REMEMBER: all drawings are read from backwards.. so first function is translate, then rotate, then translate, translate..
 			this._cnv.translate(this._widthAddHalf,this._heightAddHalf);	// at least center image on screen
 			this._cnv.translate(this._widthHalf,this._heightHalf);			// we move image back to its orginal 
