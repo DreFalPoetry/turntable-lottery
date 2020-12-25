@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.43.187:8080'
+const REMOTE_URL = 'http://192.168.31.203:8080'
 
 let turnplate={
 		restaraunts:[],				//大转盘奖品名称
@@ -100,10 +100,10 @@ function getWinInfo(callBack){
     dataType: "json",
     timeout:5000,
     success: function(res) {  
-      $('.lottery-btn').removeClass('active')
       if(res.code == 200){
         callBack(res.data)
       }else{
+        $('.lottery-btn').removeClass('active')
         resetbRotate(res.msg)
       }
     },
@@ -126,8 +126,7 @@ function drawWheelByImgs(imgs){
   }
 
   let timer = setInterval(function(){
-    if(Object.keys(imgsDoneObj).length == 5){
-      console.log('all done ======')
+    if(Object.keys(imgsDoneObj).length == 4){
       clearInterval(timer)
       setLotteryInfo(true)
       drawRouletteWheel(imgsDoneObj)
@@ -138,16 +137,15 @@ function drawWheelByImgs(imgs){
 // 设置中奖机会次数
 function setChanceCount(total = 0,remain = 0){
   if(total!=null){
-    $('#totalChance').text(total)
+    $('#totalChance').html(total)
   }
-  $('#leftChance').text(remain)
+  document.getElementById("leftChance").innerHTML = '当前剩余' + remain + '次抽奖机会';
 }
 
 $(document).ready(function(){
   document.body.addEventListener('touchstart', function () {});
 
   getLotteryInfo(function(data){
-    console.log(data)
     turnplate.leftChance = data.leftChance
     setChanceCount(data.totalChance,data.leftChance)
     const awardlist = data.awardlist
@@ -173,12 +171,10 @@ $(document).ready(function(){
         position:5
       })
     }
-    imgs.push({
-      id:'lucky',
-      src:"https://picsum.photos/30/30"
-    })
-    console.log('all imgs',imgs)
-    console.log(wheelList)
+    // imgs.push({
+    //   id:'lucky',
+    //   src:""
+    // })
     //动态添加大转盘的奖品与奖品区域背景颜色
     turnplate.restaraunts = wheelList
     turnplate.colors = wheelColors;
@@ -208,9 +204,10 @@ $(document).ready(function(){
 		$('#wheelcanvas').stopRotate();
 		$('#wheelcanvas').rotate({
 			angle:0,
-			animateTo: angles+3600,
+			animateTo: angles+360*5,
 			duration: 10000,
 			callback:function (){        
+        $('.lottery-btn').removeClass('active')
         const awardName = info.awardName + ':' + info.awardSubName 
         resetbRotate(awardName)
 			}
@@ -245,7 +242,6 @@ $(document).ready(function(){
       turnplate.leftChance = data.leftChance
       setChanceCount(null,data.leftChance)
       if(data.isWin){
-        console.log(data.winAwardId)
         let item = 5
         for(let i=0; i<turnplate.restaraunts.length;i++){
           if(turnplate.restaraunts[i].id == data.winAwardId){
@@ -335,7 +331,7 @@ function drawRouletteWheel(imgsDone) {
       if(itemId){
         ctx.drawImage(imgsDone[itemId],-25,50, 50, 50);
       }else{
-        ctx.drawImage(imgsDone['lucky'] ,-25,50, 50, 50);  
+        // ctx.drawImage(imgsDone['lucky'] ,-25,50, 50, 50);  
       }
       
       //添加对应图标
