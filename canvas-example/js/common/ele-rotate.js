@@ -260,13 +260,16 @@ Wilq32.PhotoEffect.prototype={
 		else if (supportedCSS)
 		return function(angle){
             this._angle = angle;
+            this._img.style.webkitTransform = 'translateZ(0)'
+            this._img.style.MozTransform = 'translateZ(0)'
+            this._img.style.msTransform = 'translateZ(0)'
             this._img.style.transform = 'translateZ(0)'
             this._img.style.webkitBackfaceVisibility = 'hidden'
-      this._img.style.mozBackfaceVisibility = 'hidden'
+      this._img.style.MozBackfaceVisibility = 'hidden'
       this._img.style.msBackfaceVisibility = 'hidden'
       this._img.style.backfaceVisibility = 'hidden'
       this._img.style.webkitPerspective = 1000
-      this._img.style.mozPerspective = 1000
+      this._img.style.MozPerspective = 1000
       this._img.style.msPerspective = 1000
       this._img.style.perspective = 1000			
 			this._img.style[supportedCSS]="rotate("+(angle%360)+"deg)";
@@ -279,13 +282,16 @@ Wilq32.PhotoEffect.prototype={
 			// clear canvas	
 			this._canvas.width = this._width+this._widthAdd;
 			this._canvas.height = this._height+this._heightAdd;
+      this._cnv.style.webkitTransform = 'translateZ(0)'
+      this._cnv.style.MozTransform = 'translateZ(0)'
+      this._cnv.style.msTransform = 'translateZ(0)'
       this._cnv.style.transform = 'translateZ(0)'
       this._cnv.style.webkitBackfaceVisibility = 'hidden'
-      this._cnv.style.mozBackfaceVisibility = 'hidden'
+      this._cnv.style.MozBackfaceVisibility = 'hidden'
       this._cnv.style.msBackfaceVisibility = 'hidden'
       this._cnv.style.backfaceVisibility = 'hidden'
       this._cnv.style.webkitPerspective = 1000
-      this._cnv.style.mozPerspective = 1000
+      this._cnv.style.MozPerspective = 1000
       this._cnv.style.msPerspective = 1000
       this._cnv.style.perspective = 1000			
 			// REMEMBER: all drawings are read from backwards.. so first function is translate, then rotate, then translate, translate..
