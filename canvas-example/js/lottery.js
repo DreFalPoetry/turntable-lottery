@@ -276,7 +276,7 @@ function drawRouletteWheel(imgsDone) {
 	  //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式  
 	  ctx.strokeStyle = "#FFBE04";
 	  //font 属性设置或返回画布上文本内容的当前字体属性
-    ctx.font = '28px Microsoft YaHei';      
+    ctx.font = 'bold 32px Microsoft YaHei';      
     
     for(var i = 0; i < turnplate.restaraunts.length; i++) {       
       var angle = turnplate.startAngle + i * arc;

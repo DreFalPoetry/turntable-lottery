@@ -79,6 +79,7 @@
   justify-content: center;
   background: #FFEC59;
   padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
 }
 
 .table-inner{
@@ -272,7 +273,7 @@
   overflow: hidden;
   box-sizing: border-box;
   margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .mode-partake-header,.rule-img-wrapper{
