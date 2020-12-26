@@ -131,6 +131,10 @@
   font-weight: bold;
 }
 
+.flex-wrapper .content>div:last-child{
+  padding: 0 0.2rem;
+}
+
 .flex-wrapper .content .dialog{
   position: absolute;
   width: 100%;
