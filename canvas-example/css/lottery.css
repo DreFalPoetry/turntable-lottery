@@ -77,7 +77,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background: #FFEC59;
+  background: #FFDA6D;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
 }
@@ -260,7 +260,7 @@
 
 .mode-partake-container{
   width: 100%;
-  background-color: #FFEC59;
+  background-color: #FFDA6D;
   display: flex;
   justify-content: center;
 }
