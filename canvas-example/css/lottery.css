@@ -152,8 +152,8 @@
 }
 
 .grid-wrapper{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.5fr;
+  display: flex;
+  /* grid-template-columns: 1fr 1fr 1.5fr; */
   text-align: center;
 }
 
@@ -163,6 +163,13 @@
 
 .grid-wrapper>div:last-child{
   margin-right: 0;
+}
+
+.col1,.col2{
+  width: 1.8rem;
+}
+.col3{
+  flex: 1;
 }
 
 .remain-chance-text{
@@ -313,6 +320,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 0.2rem;
 }
 
 .mode-partake-list .dialog img{
