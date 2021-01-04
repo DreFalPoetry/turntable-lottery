@@ -11,6 +11,7 @@ function getQueryVariable(variable){
 }
 
 function showTooltip(msg){
+  if(!msg) return;
   $('#recordTip').text(msg).show()
   setTimeout(() => {
     $('#recordTip').text('').hide()
