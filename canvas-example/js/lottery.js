@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.31.203:8080'
+const REMOTE_URL = 'http://192.168.251.20:8080'
 
 let turnplate={
 		restaraunts:[],				//大转盘奖品名称
@@ -15,6 +15,8 @@ let turnplate={
     },
     leftChance:0
 };
+
+let allPriceIndArr = []
 
 let wheelColors = []
 for(let i=0;i<10;i++){
@@ -117,20 +119,23 @@ function getWinInfo(callBack){
 
 // 图片全部加载完成之后画轮子
 function drawWheelByImgs(imgs){
-  let imgsDoneObj = {}
+  let imgsDoneArr = []
   for(let i=0;i<imgs.length;i++){
     let _tempImg = new Image(50, 50)
     _tempImg.src = imgs[i].src
     _tempImg.onload = function(){
-      imgsDoneObj[imgs[i].id] = _tempImg 
+      imgsDoneArr.push({
+        id: imgs[i].id,
+        img: _tempImg
+      })
     }
   }
 
   let timer = setInterval(function(){
-    if(Object.keys(imgsDoneObj).length == 4){
+    if(imgsDoneArr.length == 8){
       clearInterval(timer)
       setLotteryInfo(true)
-      drawRouletteWheel(imgsDoneObj)
+      drawRouletteWheel(imgsDoneArr)
     }
   },100)
 }
@@ -152,30 +157,39 @@ $(document).ready(function(){
     const awardlist = data.awardlist
     let wheelList = []
     let imgs = []
-    for(let i=0;i<2;i++){
-      // 设置实体奖项
-      for(let j=0; j<awardlist.length; j++){
-        awardlist[j].position = j + 1
-        wheelList.push(awardlist[j])
-        if(i == 0 ){
-          imgs.push({
-            id:awardlist[j].id,
-            src:awardlist[j].awardPic
-          })
-        }
-      }
-      // 设置参与奖
-      wheelList.push({
-        type:'lucky',
-        awardName: "未中奖",
-        awardSubName:"谢谢参与",
-        position:5
+    // 设置实体奖项
+    for(let j=0; j<awardlist.length; j++){
+      allPriceIndArr.unshift(awardlist[j].id)
+      wheelList.unshift(awardlist[j])
+      imgs.push({
+        id:awardlist[j].id,
+        src:awardlist[j].awardPic
       })
     }
-    // imgs.push({
-    //   id:'lucky',
-    //   src:""
-    // })
+    // 设置参与奖
+    wheelList.unshift({
+      type:'lucky',
+      awardName: "未中奖",
+      awardSubName:"谢谢参与",
+      // position:5
+    })
+    allPriceIndArr.unshift('empty')
+    const restPriceCount = 9 - allPriceIndArr.length
+    for(let i=0;i< restPriceCount; i++){
+      allPriceIndArr.unshift(awardlist[i].id)
+      wheelList.unshift(awardlist[i])
+      imgs.push({
+        id:awardlist[i].id,
+        src:awardlist[i].awardPic
+      })
+    }
+    wheelList.unshift({
+      type:'lucky',
+      awardName: "未中奖",
+      awardSubName:"谢谢参与",
+      // position:5
+    })
+    allPriceIndArr.unshift('empty')
     //动态添加大转盘的奖品与奖品区域背景颜色
     turnplate.restaraunts = wheelList
     turnplate.colors = wheelColors;
@@ -243,16 +257,11 @@ $(document).ready(function(){
       turnplate.leftChance = data.leftChance
       setChanceCount(null,data.leftChance)
       if(data.isWin){
-        let item = 5
-        for(let i=0; i<turnplate.restaraunts.length;i++){
-          if(turnplate.restaraunts[i].id == data.winAwardId){
-            item = turnplate.restaraunts[i].position
-            break;
-          }
-        }
+        let item = allPriceIndArr.indexOf(data.winAwardId) + 1
         rotateFn(item, turnplate.restaraunts[item-1]);
       }else{
-        rotateFn(5, turnplate.restaraunts[4]);
+        const emptyPriceInd = allPriceIndArr.indexOf('empty') + 1
+        rotateFn(emptyPriceInd, turnplate.restaraunts[emptyPriceInd -1]);
       }
     })
 		//获取随机数(奖品个数范围内)
@@ -330,7 +339,11 @@ function drawRouletteWheel(imgsDone) {
         ctx.fillText(text, -ctx.measureText(text).width / 2, 35);
       }
       if(itemId){
-        ctx.drawImage(imgsDone[itemId],-25,50, 50, 50);
+        for(let i=0; i< imgsDone.length; i++){
+          if(itemId == imgsDone[i].id){
+            ctx.drawImage(imgsDone[i].img,-25,50, 50, 50);
+          }
+        }
       }else{
         // ctx.drawImage(imgsDone['lucky'] ,-25,50, 50, 50);  
       }
