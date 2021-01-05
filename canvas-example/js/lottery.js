@@ -1,4 +1,4 @@
-const REMOTE_URL = 'http://192.168.251.20:8080'
+const REMOTE_URL = 'http://192.168.31.203:8080'
 
 let turnplate={
 		restaraunts:[],				//大转盘奖品名称
@@ -286,7 +286,7 @@ function drawRouletteWheel(imgsDone) {
 	  //strokeStyle 属性设置或返回用于笔触的颜色、渐变或模式  
 	  ctx.strokeStyle = "#FFBE04";
 	  //font 属性设置或返回画布上文本内容的当前字体属性
-    ctx.font = 'bold 32px Microsoft YaHei';      
+    ctx.font = 'bold 36px Microsoft YaHei';      
     
     for(var i = 0; i < turnplate.restaraunts.length; i++) {       
       var angle = turnplate.startAngle + i * arc;
@@ -331,11 +331,13 @@ function drawRouletteWheel(imgsDone) {
         text = text.substring(0,6)+"-@@@-"+text.substring(6);
         var texts = text.split("-@@@-");
         for(var j = 0; j<texts.length; j++){
+          ctx.font = 'bold 26px Microsoft YaHei';      
           ctx.fillText(texts[j], -ctx.measureText(texts[j]).width / 2, 35 + j * line_height);
         }
       }else{
         //在画布上绘制填色的文本。文本的默认颜色是黑色
         //measureText()方法返回包含一个对象，该对象包含以像素计的指定字体宽度
+        ctx.font = 'bold 26px Microsoft YaHei';      
         ctx.fillText(text, -ctx.measureText(text).width / 2, 35);
       }
       if(itemId){
